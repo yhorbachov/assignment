@@ -23,7 +23,7 @@ describe('[Core] ThumbnailService', () => {
   });
 
   it('should return thumbnailUrl', () => {
-    service.getThumbnail(1).subscribe((url) => expect(url).toEqual('testThumbnailUrl'));
+    service.getThumbnailUrl(1).subscribe((url) => expect(url).toEqual('testThumbnailUrl'));
 
     const req = httpTestingController.expectOne('http://testurl.com/photos/1');
     req.flush({ thumbnailUrl: 'testThumbnailUrl' });

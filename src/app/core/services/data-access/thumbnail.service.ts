@@ -8,7 +8,7 @@ export class ThumbnailService {
   #http = inject(HttpClient);
   #apiBase = inject(API_BASE);
 
-  getThumbnail(id: number): Observable<string> {
+  getThumbnailUrl(id: number): Observable<string> {
     return this.#http
       .get<{ thumbnailUrl: string }>(`${this.#apiBase}/photos/${id}`)
       .pipe(map((response) => response.thumbnailUrl));
