@@ -1,6 +1,6 @@
 <div class="flex w-full h-full justify-center items-center">
   <div class="border border-base-300 p-6 rounded-md max-w-lg w-full">
-    <form class="w-full" [formGroup]="signupSerivce.form" (ngSubmit)="signup()">
+    <form class="w-full" [formGroup]="form" (ngSubmit)="signup()">
       <div class="text-xl text-center mb-4">Sign up!</div>
       <div class="text-center text-sm text-neutral-500">Your full name will be</div>
       <div class="text-center" data-testid="full-name">{{ fullName$ | async }}&nbsp;</div>

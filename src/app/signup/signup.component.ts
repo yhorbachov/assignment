@@ -16,24 +16,26 @@ import { Subject, map } from 'rxjs';
 })
 export default class SignupComponent {
   #destroyRef = inject(DestroyRef);
-  signupSerivce = inject(SignupService);
+  #signupSerivce = inject(SignupService);
 
-  firstNameErrors$ = this.signupSerivce.errorsFor('firstName');
-  lastNameErrors$ = this.signupSerivce.errorsFor('lastName');
-  emailErrors$ = this.signupSerivce.errorsFor('email');
-  passwordErrors$ = this.signupSerivce.errorsFor('password');
+  form = this.#signupSerivce.form;
+
+  firstNameErrors$ = this.#signupSerivce.errorsFor('firstName');
+  lastNameErrors$ = this.#signupSerivce.errorsFor('lastName');
+  emailErrors$ = this.#signupSerivce.errorsFor('email');
+  passwordErrors$ = this.#signupSerivce.errorsFor('password');
 
   successMsg$ = new Subject<string>();
   errorMsg$ = new Subject<string>();
 
-  fullName$ = this.signupSerivce.form.valueChanges.pipe(map(({ firstName, lastName }) => `${firstName} ${lastName}`));
+  fullName$ = this.#signupSerivce.form.valueChanges.pipe(map(({ firstName, lastName }) => `${firstName} ${lastName}`));
 
   signup() {
-    this.signupSerivce.forceValidation();
+    this.#signupSerivce.forceValidation();
 
-    if (this.signupSerivce.form.invalid) return;
+    if (this.#signupSerivce.form.invalid) return;
 
-    this.signupSerivce
+    this.#signupSerivce
       .signup()
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
