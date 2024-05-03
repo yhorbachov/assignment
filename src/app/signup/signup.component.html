@@ -1,1 +1,39 @@
-Signup page
+<div class="flex w-full h-full justify-center items-center">
+  <div class="border border-base-300 p-6 rounded-md max-w-lg w-full">
+    <form class="w-full" [formGroup]="signupSerivce.form" (ngSubmit)="signup()">
+      <div class="text-xl text-center mb-4">Sign up!</div>
+
+      <div class="flex flex-col gap-3">
+        <app-text-input
+          label="First name"
+          formControlName="firstName"
+          [error]="firstNameErrors$ | async"
+        ></app-text-input>
+
+        <app-text-input label="Last name" formControlName="lastName" [error]="lastNameErrors$ | async"></app-text-input>
+
+        <app-text-input label="Email" formControlName="email" [error]="emailErrors$ | async"></app-text-input>
+
+        <app-text-input
+          label="Password"
+          type="password"
+          formControlName="password"
+          [error]="passwordErrors$ | async"
+        ></app-text-input>
+      </div>
+      <button class="btn btn-primary w-full mt-6">Sign up</button>
+
+      @if (successMsg$ | async; as successMsg) {
+        <div role="alert" class="alert alert-success mt-6">
+          <span>Your purchase has been confirmed!</span>
+        </div>
+      }
+
+      @if (errorMsg$ | async; as errorMsg) {
+        <div role="alert" class="alert alert-error mt-6">
+          <span>{{ errorMsg }}</span>
+        </div>
+      }
+    </form>
+  </div>
+</div>

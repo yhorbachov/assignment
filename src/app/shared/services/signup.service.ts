@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ThumbnailService, UsersService } from '@app/core/services/data-access';
-import { first, map, merge, switchMap } from 'rxjs';
+import { Subject, first, map, merge, switchMap } from 'rxjs';
 
 type FormField = 'firstName' | 'lastName' | 'email' | 'password';
 
@@ -42,6 +42,10 @@ export class SignupService {
   #thumbnails = inject(ThumbnailService);
   #fb = inject(FormBuilder).nonNullable;
 
+  // Because validation happens on form control only when status changes, we need to force validation
+  // when the form is submitted. This subject is used to trigger the validation.
+  #forceValidation = new Subject<void>();
+
   form = this.#fb.group({
     firstName: this.#fb.control('', [Validators.required]),
     lastName: this.#fb.control('', [Validators.required]),
@@ -55,11 +59,6 @@ export class SignupService {
   });
 
   signup() {
-    this.form.markAllAsTouched();
-    if (this.form.invalid) {
-      return;
-    }
-
     const { firstName, lastName, email } = this.form.getRawValue();
 
     return this.#thumbnails
@@ -67,10 +66,14 @@ export class SignupService {
       .pipe(switchMap((thumbnailUrl) => this.#users.createUser({ firstName, lastName, email, thumbnailUrl })));
   }
 
+  forceValidation() {
+    this.#forceValidation.next();
+  }
+
   errorsFor(controlName: 'firstName' | 'lastName' | 'email' | 'password') {
     const control = this.form.get(controlName)!;
 
-    return merge(control.statusChanges, control.valueChanges).pipe(
+    return merge(control.statusChanges, control.valueChanges, this.#forceValidation).pipe(
       map(() => {
         const errors = control?.errors;
         if (!errors) {

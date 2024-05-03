@@ -3,6 +3,8 @@ import { SignupService } from './signup.service';
 import { ThumbnailService, UsersService } from '@app/core/services/data-access';
 import { Observable, of } from 'rxjs';
 
+import { SubscriberSpy, subscribeSpyTo } from '@hirez_io/observer-spy';
+
 const formData = (params: Partial<{ firstName: string; lastName: string; email: string; password: string }>) => ({
   firstName: 'John',
   lastName: 'Doe',
@@ -32,40 +34,36 @@ describe('[Shared] SignupService', () => {
   });
 
   describe('signup', () => {
-    it('should mark form as touched', () => {
-      service.signup();
-      expect(service.form.touched).toBeTrue();
-    });
-
-    describe('when form is invalid', () => {
-      it('should not call createUser', () => {
-        service.signup();
-        expect(usersMock.createUser).not.toHaveBeenCalled();
+    beforeEach(() => {
+      service.form.setValue({
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@test.com',
+        password: 'PaSword123456',
       });
     });
 
-    describe('when form is valid', () => {
-      beforeEach(() => {
-        service.form.setValue({
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'john@test.com',
-          password: 'PaSword123456',
-        });
-      });
+    it('should call createUser', () => {
+      thumbnailMock.getThumbnailUrl.and.returnValue(of('http://testurl.com/thumbnail.jpg'));
+      usersMock.createUser.and.returnValue(of(undefined));
 
-      it('should call createUser', () => {
-        thumbnailMock.getThumbnailUrl.and.returnValue(of('http://testurl.com/thumbnail.jpg'));
-        usersMock.createUser.and.returnValue(of(undefined));
+      subscribeSpyTo(service.signup());
 
-        service.signup()?.subscribe();
-        expect(usersMock.createUser).toHaveBeenCalledWith({
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'john@test.com',
-          thumbnailUrl: 'http://testurl.com/thumbnail.jpg',
-        });
+      expect(usersMock.createUser).toHaveBeenCalledWith({
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@test.com',
+        thumbnailUrl: 'http://testurl.com/thumbnail.jpg',
       });
+    });
+  });
+
+  describe('forceValidation', () => {
+    it('should emit validation errors', () => {
+      const errors = service.errorsFor('firstName');
+      const observerSpy = subscribeSpyTo(errors);
+      service.forceValidation();
+      expect(observerSpy.getValues()).toEqual(['First name is required']);
     });
   });
 
@@ -126,19 +124,21 @@ describe('[Shared] SignupService', () => {
   });
 
   describe('getErrorMessage', () => {
-    let errors: Observable<string | undefined>;
+    let errorsSpy: SubscriberSpy<string | undefined>;
     beforeEach(() => {
-      errors = service.errorsFor('firstName');
+      errorsSpy = subscribeSpyTo(service.errorsFor('firstName'));
     });
 
     it('should emit error message if control is invalid', () => {
-      errors.subscribe((error) => expect(error).toBeDefined());
       service.form.setValue(formData({ firstName: '' }));
+      service.forceValidation();
+      expect(errorsSpy.getLastValue()).toEqual('First name is required');
     });
 
     it('should emit undefined if control is valid', () => {
-      errors.subscribe((error) => expect(error).toBeUndefined());
       service.form.setValue(formData({ firstName: 'John' }));
+      service.forceValidation();
+      expect(errorsSpy.getLastValue()).toBeUndefined();
     });
   });
 });

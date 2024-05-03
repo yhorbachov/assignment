@@ -52,6 +52,9 @@ devDependencies:
   '@angular/compiler-cli':
     specifier: ^17.3.0
     version: 17.3.7(@angular/compiler@17.3.7)(typescript@5.4.5)
+  '@hirez_io/observer-spy':
+    specifier: ^2.2.0
+    version: 2.2.0(rxjs@7.8.1)(typescript@5.4.5)
   '@types/jasmine':
     specifier: ~5.1.0
     version: 5.1.4
@@ -2161,6 +2164,16 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hirez_io/observer-spy@2.2.0(rxjs@7.8.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-G9nv87vjRILgB/X1AtKBv1DZX7yXSYAOCXon/f+QULKoXVhVehYUF5Lv0SQ97ebf1sA48Z2CyQ9h2v4Pz6DgaQ==}
+    peerDependencies:
+      rxjs: '>=6.0.0'
+      typescript: '>=2.8.1'
+    dependencies:
+      rxjs: 7.8.1
+      typescript: 5.4.5
+    dev: true
 
   /@isaacs/cliui@8.0.2:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
