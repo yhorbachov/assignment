@@ -62,7 +62,7 @@ export class SignupService {
     const { firstName, lastName, email } = this.form.getRawValue();
 
     return this.#thumbnails
-      .getThumbnailUrl(lastName?.length)
+      .getThumbnailUrl(lastName.length)
       .pipe(switchMap((thumbnailUrl) => this.#users.createUser({ firstName, lastName, email, thumbnailUrl })));
   }
 
