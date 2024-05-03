@@ -61,6 +61,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.19
     version: 10.4.19(postcss@8.4.38)
+  jasmine-auto-spies:
+    specifier: ^8.0.1
+    version: 8.0.1(jasmine-core@5.1.2)(rxjs@7.8.1)(typescript@5.4.5)
   jasmine-core:
     specifier: ~5.1.0
     version: 5.1.2
@@ -2164,6 +2167,17 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hirez_io/auto-spies-core@3.0.0(rxjs@7.8.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-au7s7/AqPU5CJhv0slVjmZqEv5Uaf2nj7pYFepp5g3B7EocEeNy7bZ74x5RJldHYtW0R8OptV2mZfwaDOfcNCA==}
+    peerDependencies:
+      rxjs: '>=6.0.0 < 8'
+      typescript: '>=2.8.1'
+    dependencies:
+      javascript-stringify: 2.1.0
+      rxjs: 7.8.1
+      typescript: 5.4.5
+    dev: true
 
   /@hirez_io/observer-spy@2.2.0(rxjs@7.8.1)(typescript@5.4.5):
     resolution: {integrity: sha512-G9nv87vjRILgB/X1AtKBv1DZX7yXSYAOCXon/f+QULKoXVhVehYUF5Lv0SQ97ebf1sA48Z2CyQ9h2v4Pz6DgaQ==}
@@ -4886,12 +4900,29 @@ packages:
       '@pkgjs/parseargs': 0.11.0
     dev: true
 
+  /jasmine-auto-spies@8.0.1(jasmine-core@5.1.2)(rxjs@7.8.1)(typescript@5.4.5):
+    resolution: {integrity: sha512-4T8YVS6VJ7VoCdAOqEh3sziD6Wf/m+dfGGQ1a7GZHqjZUjaSD0Be+KqP7CmTiBc3HrX+uvOXr380QIW+TfHhqA==}
+    peerDependencies:
+      jasmine-core: '>=2.6.0 < 6'
+      rxjs: '>=6.0.0 < 8'
+      typescript: '>=2.8.1'
+    dependencies:
+      '@hirez_io/auto-spies-core': 3.0.0(rxjs@7.8.1)(typescript@5.4.5)
+      jasmine-core: 5.1.2
+      rxjs: 7.8.1
+      typescript: 5.4.5
+    dev: true
+
   /jasmine-core@4.6.0:
     resolution: {integrity: sha512-O236+gd0ZXS8YAjFx8xKaJ94/erqUliEkJTDedyE7iHvv4ZVqi+q+8acJxu05/WJDKm512EUNn809In37nWlAQ==}
     dev: true
 
   /jasmine-core@5.1.2:
     resolution: {integrity: sha512-2oIUMGn00FdUiqz6epiiJr7xcFyNYj3rDcfmnzfkBnHyBQ3cBQUs4mmyGsOb7TTLb9kxk7dBcmEmqhDKkBoDyA==}
+    dev: true
+
+  /javascript-stringify@2.1.0:
+    resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
     dev: true
 
   /jest-worker@27.5.1:

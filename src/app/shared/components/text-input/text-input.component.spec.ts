@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { TextInputComponent } from './text-input.component';
 import { By } from '@angular/platform-browser';
+import { TextInputComponent } from './text-input.component';
 
 describe('[Shared] TextInputComponent', () => {
   let component: TextInputComponent;
