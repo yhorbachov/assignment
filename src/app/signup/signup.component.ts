@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from '@app/shared/components';
@@ -12,6 +12,7 @@ import { Subject, map } from 'rxjs';
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   providers: [SignupService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SignupComponent {
   #destroyRef = inject(DestroyRef);
