@@ -35,7 +35,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class TextInputComponent implements ControlValueAccessor {
   @Input() label?: string;
   @Input() error?: any;
-  @Input() type: 'text' | 'password' = 'text';
+  @Input() type: 'text' | 'password' | 'email' = 'text';
 
   _value = '';
   _disabled = false;
