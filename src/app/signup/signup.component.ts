@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextInputComponent } from '@app/shared/components';
 import { SignupService } from '@app/shared/services';
-import { Subject } from 'rxjs';
+import { Subject, map } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -24,6 +24,8 @@ export default class SignupComponent {
 
   successMsg$ = new Subject<string>();
   errorMsg$ = new Subject<string>();
+
+  fullName$ = this.signupSerivce.form.valueChanges.pipe(map(({ firstName, lastName }) => `${firstName} ${lastName}`));
 
   signup() {
     this.signupSerivce.forceValidation();

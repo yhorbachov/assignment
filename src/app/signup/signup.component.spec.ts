@@ -55,6 +55,16 @@ describe('[Signup] SignupComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should show full name', () => {
+    signupServiceMock.form.patchValue({
+      firstName: 'John',
+      lastName: 'Doe',
+    });
+    fixture.detectChanges();
+    const fullName = fixture.debugElement.query(By.css('[data-testid="full-name"]'));
+    expect(fullName.nativeElement.textContent).toContain('John Doe');
+  });
+
   it('should show success message', () => {
     component.signup();
     fixture.detectChanges();
