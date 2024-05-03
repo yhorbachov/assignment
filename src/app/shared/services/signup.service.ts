@@ -88,10 +88,6 @@ export class SignupService {
 
   #getPasswordValidator() {
     return (control: AbstractControl) => {
-      if (!this.form) {
-        return null;
-      }
-
       const { firstName, lastName } = this.form.getRawValue();
       const includesFirstName = control.value.toLowerCase().includes(firstName.toLowerCase());
       const includesLastName = control.value.toLowerCase().includes(lastName.toLowerCase());
