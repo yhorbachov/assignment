@@ -1,11 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ThumbnailService } from './thumbnail.service';
-import { API_BASE } from '../tokens';
+import { API_BASE } from '../../tokens';
 
 describe('[Core] ThumbnailService', () => {
   let service: ThumbnailService;
@@ -27,9 +23,7 @@ describe('[Core] ThumbnailService', () => {
   });
 
   it('should return thumbnailUrl', () => {
-    service
-      .getThumbnail(1)
-      .subscribe((url) => expect(url).toEqual('testThumbnailUrl'));
+    service.getThumbnail(1).subscribe((url) => expect(url).toEqual('testThumbnailUrl'));
 
     const req = httpTestingController.expectOne('http://testurl.com/photos/1');
     req.flush({ thumbnailUrl: 'testThumbnailUrl' });
