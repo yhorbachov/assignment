@@ -1,14 +1,39 @@
 # Assignment
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.4.
+Simple SPA to immitate signup process. Consists of one page with signup form.
+
+## Technical decissions
+
+I mostly used vanila angular with Tailwind+DaisyUI for styling.
+
+For testing purpouses I included `@hirez_io/observer-spy` library to test observables, everything else is prety much vanila angular.
+
+All signup business logic you can find in the `shared/services/signup.service`, including form validation and error messages. For simplisity sake I kept error messages there, but in real world application probably it would be better to move it into `pipe` and provide error messages values as injection token.
+
+## Projects structure
+
+### Core
+
+- Services
+  - ThumbnailService - handles data access to thumbnails API
+  - UsersService - handles data access to users API
+- Tokens
+  - API_BASE - injectable API base url
+
+### Shared
+
+- Components
+  - TextInput - ControlValueAccessor implementation to integrate into angular forms
+- Services
+  - SignupService - Contains business logic for signup process.
+
+### Signup (feature)
+
+Dedicated component for signup process. Displays the form and uses SignupService
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
@@ -21,7 +46,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
